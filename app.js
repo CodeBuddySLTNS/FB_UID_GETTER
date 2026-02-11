@@ -32,7 +32,14 @@ app.listen(PORT, () => {
 
 async function getFbUid(url) {
   try {
-    const browser = await puppeteer.launch({ headless: true });
+    const browser = await puppeteer.launch({
+      args: [
+        "--no-sandbox",
+        "--disable-setuid-sandbox",
+        "--single-process",
+        "--no-zygote",
+      ],
+    });
     const page = await browser.newPage();
 
     console.log(`Navigating to ${url}...`);
